@@ -8,8 +8,20 @@ type GameMessage = { type: "game_event"; result: { ok: boolean; message: string;
 const canvas = document.querySelector<HTMLCanvasElement>("#game")!;
 const ctx = canvas.getContext("2d")!;
 const connection = document.querySelector<HTMLDivElement>("#connection")!;
-let players: Player[] = [];
-let leader: Player | null = null;
+const isDemo = new URLSearchParams(location.search).get("demo") === "1";
+const demoPlayers: Player[] = [
+  ["demo-01", "Thanh Vân", 18_420, 8], ["demo-02", "Mặc Trần", 14_260, 7],
+  ["demo-03", "Lạc Tinh", 11_080, 7], ["demo-04", "Bạch Ly", 8_540, 6],
+  ["demo-05", "Huyền Minh", 6_220, 5], ["demo-06", "Vân Chi", 4_160, 4],
+  ["demo-07", "Tử Dương", 2_780, 3], ["demo-08", "Thanh Liên", 1_120, 2],
+].map(([userId, displayName, totalXp, realmIndex], index) => ({
+  userId: String(userId), displayName: String(displayName), totalXp: Number(totalXp), realmIndex: Number(realmIndex),
+  consecutiveBreakthroughFailures: 0, cultivateReadyAt: 0, breakthroughReadyAt: 0, miningReadyAt: 0,
+  bossAttackReadyAt: 0, totalGiftCoin: 0, bossDamage: [2_800, 1_940, 1_420, 880, 540, 260, 120, 60][index]!,
+  createdAt: Date.now(), updatedAt: Date.now(),
+}));
+let players: Player[] = isDemo ? demoPlayers : [];
+let leader: Player | null = isDemo ? demoPlayers[0]! : null;
 let statusMessage = "Vạn đạo khai mở";
 let statusUntil = 0;
 let serverConnected = false;
@@ -21,7 +33,7 @@ function connect() {
   socket = new WebSocket(wsUrl);
   socket.addEventListener("open", () => {
     serverConnected = true;
-    connection.textContent = "MÁY CHỦ ĐANG KẾT NỐI";
+    connection.textContent = isDemo ? "BẢN XEM THỬ · DỮ LIỆU MẪU" : "MÁY CHỦ ĐANG KẾT NỐI";
     connection.dataset.state = "connected";
   });
   socket.addEventListener("close", () => {
@@ -33,8 +45,8 @@ function connect() {
   socket.addEventListener("message", (message) => {
     const data = JSON.parse(String(message.data)) as Snapshot | GameMessage;
     if (data.type === "snapshot") {
-      players = data.players;
-      leader = data.leader;
+      players = data.players.length > 0 || !isDemo ? data.players : demoPlayers;
+      leader = data.leader ?? (isDemo ? demoPlayers[0]! : null);
     } else if (data.type === "game_event") {
       statusMessage = data.result.message;
       statusUntil = Date.now() + 4500;
@@ -113,7 +125,7 @@ function draw() {
     const col = index % 4;
     const row = Math.floor(index / 4);
     const x = 190 + col * 235;
-    const y = 650 + row * 205;
+    const y = 610 + row * 180;
     ctx.save();
     ctx.fillStyle = "rgba(154,135,196,.16)";
     ctx.beginPath();
@@ -135,6 +147,26 @@ function draw() {
     ctx.fillText(`${player.totalXp.toLocaleString("vi-VN")} tu vi`, x, y + 96);
     ctx.restore();
   });
+
+  if (isDemo) {
+    roundRect(128, 930, 824, 154, 24, "rgba(39,20,29,.78)", "rgba(212,116,111,.48)");
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#e0a19b";
+    ctx.font = "600 20px system-ui, sans-serif";
+    ctx.fillText("BOSS THẾ GIỚI", 166, 970);
+    ctx.fillStyle = "#f4e8dd";
+    ctx.font = "700 29px Georgia, serif";
+    ctx.fillText("Kỳ Lân U Minh", 166, 1011);
+    ctx.fillStyle = "#bdaeba";
+    ctx.font = "17px system-ui, sans-serif";
+    ctx.fillText("Còn 01:24  ·  Top sát thương: Thanh Vân", 166, 1050);
+    roundRect(585, 990, 320, 26, 13, "rgba(8,7,12,.72)");
+    roundRect(585, 990, 237, 26, 13, "#b65657");
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#f0ded8";
+    ctx.font = "600 16px system-ui, sans-serif";
+    ctx.fillText("18.500 / 25.000 HP", 905, 1047);
+  }
 
   roundRect(64, 1120, 952, 510, 28, "rgba(14,13,22,.82)", "rgba(160,144,190,.35)");
   ctx.fillStyle = "#e3d19d";
@@ -169,7 +201,7 @@ function draw() {
   ctx.textAlign = "center";
   ctx.fillStyle = "#dfcc9c";
   ctx.font = "600 22px system-ui, sans-serif";
-  ctx.fillText(Date.now() < statusUntil ? statusMessage : "Chat join để nhập đạo · tu để tăng tu vi · !do kiep để đột phá", 540, 1747);
+  ctx.fillText(Date.now() < statusUntil ? statusMessage : isDemo ? "BOSS ĐANG XUẤT HIỆN · chat chien để hợp lực trừ yêu" : "Chat join để nhập đạo · tu để tăng tu vi · !do kiep để đột phá", 540, 1747);
   ctx.fillStyle = "#a59aaf";
   ctx.font = "18px system-ui, sans-serif";
   ctx.fillText("Lịch sự kiện 12 phút · Live đang kết nối", 540, 1784);
