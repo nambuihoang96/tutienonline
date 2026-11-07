@@ -6,7 +6,7 @@ import type { NormalizedLiveEvent, Player } from "./types.js";
 
 export type CommandResult =
   | { ok: true; code: string; message: string; player?: Player; data?: Record<string, unknown> }
-  | { ok: false; code: string; message: string; player?: Player };
+  | { ok: false; code: string; message: string; player?: Player; data?: Record<string, unknown> };
 
 type PlayerRow = {
   user_id: string;
