@@ -14,6 +14,8 @@ TypeScript game foundation based on `GDD_Pham_Tu_v3_2.md`.
 
 Requires Node.js 22 or newer.
 
+On Windows, double-click `run.bat` to start the local server and open the demo preview.
+
 ```powershell
 npm install
 npm run dev
