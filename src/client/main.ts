@@ -9,6 +9,17 @@ const canvas = document.querySelector<HTMLCanvasElement>("#game")!;
 const ctx = canvas.getContext("2d")!;
 const connection = document.querySelector<HTMLDivElement>("#connection")!;
 const isDemo = new URLSearchParams(location.search).get("demo") === "1";
+const backgroundArt = new Image();
+backgroundArt.src = "/backgrounds/background_main.png";
+const logoArt = new Image();
+logoArt.src = "/logo.svg";
+const throneArt = new Image();
+throneArt.src = "/throne.svg";
+const bossArt = new Image();
+bossArt.src = "/bosses/boss_world.png";
+const cultivatorArt = [new Image(), new Image()];
+cultivatorArt[0]!.src = "/characters/cultivator_01.png";
+cultivatorArt[1]!.src = "/characters/cultivator_02.png";
 const demoPlayers: Player[] = [
   ["demo-01", "Thanh Vân", 18_420, 8], ["demo-02", "Mặc Trần", 14_260, 7],
   ["demo-03", "Lạc Tinh", 11_080, 7], ["demo-04", "Bạch Ly", 8_540, 6],
@@ -71,11 +82,16 @@ function fitText(value: string, maxWidth: number, font: string) {
 }
 
 function draw() {
-  const gradient = ctx.createLinearGradient(0, 0, 1080, 1920);
-  gradient.addColorStop(0, "#171322");
-  gradient.addColorStop(0.52, "#222038");
-  gradient.addColorStop(1, "#100e18");
-  ctx.fillStyle = gradient;
+  if (backgroundArt.complete && backgroundArt.naturalWidth > 0) {
+    ctx.drawImage(backgroundArt, 0, 0, 1080, 1920);
+    ctx.fillStyle = "rgba(13,12,21,.25)";
+  } else {
+    const gradient = ctx.createLinearGradient(0, 0, 1080, 1920);
+    gradient.addColorStop(0, "#171322");
+    gradient.addColorStop(0.52, "#222038");
+    gradient.addColorStop(1, "#100e18");
+    ctx.fillStyle = gradient;
+  }
   ctx.fillRect(0, 0, 1080, 1920);
 
   // Decorative celestial rings are temporary art placeholders.
@@ -91,17 +107,26 @@ function draw() {
   ctx.restore();
 
   ctx.textAlign = "center";
-  ctx.fillStyle = "#e9d7a2";
-  ctx.font = "700 34px Georgia, serif";
-  ctx.fillText("PHÀM TU", 540, 86);
-  ctx.fillStyle = "#b6aacd";
-  ctx.font = "22px Georgia, serif";
-  ctx.fillText("VẠN ĐẠO TRANH PHONG", 540, 122);
+  if (logoArt.complete && logoArt.naturalWidth > 0) ctx.drawImage(logoArt, 365, 26, 310, 68);
+  else {
+    ctx.fillStyle = "#e9d7a2";
+    ctx.font = "700 34px Georgia, serif";
+    ctx.fillText("PHÀM TU", 540, 86);
+    ctx.fillStyle = "#b6aacd";
+    ctx.font = "22px Georgia, serif";
+    ctx.fillText("VẠN ĐẠO TRANH PHONG", 540, 122);
+  }
 
   roundRect(64, 165, 952, 250, 28, "rgba(18,16,27,.78)", "rgba(218,188,119,.58)");
   ctx.fillStyle = "#d6bd7e";
   ctx.font = "600 24px Georgia, serif";
   ctx.fillText("TÔNG CHỦ", 540, 210);
+  if (throneArt.complete && throneArt.naturalWidth > 0) {
+    ctx.save();
+    ctx.globalAlpha = 0.44;
+    ctx.drawImage(throneArt, 454, 212, 172, 138);
+    ctx.restore();
+  }
   ctx.fillStyle = "#f7edcf";
   ctx.font = "700 42px system-ui, sans-serif";
   ctx.fillText(fitText(leader?.displayName ?? "Chưa có tu sĩ", 820, "700 42px system-ui"), 540, 270);
@@ -127,18 +152,23 @@ function draw() {
     const x = 190 + col * 235;
     const y = 610 + row * 180;
     ctx.save();
-    ctx.fillStyle = "rgba(154,135,196,.16)";
-    ctx.beginPath();
-    ctx.ellipse(x, y + 34, 62, 22, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = "#54486f";
-    ctx.beginPath();
-    ctx.ellipse(x, y, 30, 40, 0, Math.PI, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = "#87739c";
-    ctx.beginPath();
-    ctx.ellipse(x, y + 25, 52, 18, 0, Math.PI, Math.PI * 2);
-    ctx.fill();
+    const portrait = cultivatorArt[index % cultivatorArt.length]!;
+    if (portrait.complete && portrait.naturalWidth > 0) {
+      ctx.drawImage(portrait, x - 61, y - 76, 122, 148);
+    } else {
+      ctx.fillStyle = "rgba(154,135,196,.16)";
+      ctx.beginPath();
+      ctx.ellipse(x, y + 34, 62, 22, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#54486f";
+      ctx.beginPath();
+      ctx.ellipse(x, y, 30, 40, 0, Math.PI, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#87739c";
+      ctx.beginPath();
+      ctx.ellipse(x, y + 25, 52, 18, 0, Math.PI, Math.PI * 2);
+      ctx.fill();
+    }
     ctx.fillStyle = "#e9dfc1";
     ctx.font = "500 18px system-ui, sans-serif";
     ctx.fillText(fitText(player.displayName, 190, "500 18px system-ui"), x, y + 70);
@@ -153,13 +183,14 @@ function draw() {
     ctx.textAlign = "left";
     ctx.fillStyle = "#e0a19b";
     ctx.font = "600 20px system-ui, sans-serif";
-    ctx.fillText("BOSS THẾ GIỚI", 166, 970);
+    ctx.fillText("BOSS THẾ GIỚI", 330, 970);
     ctx.fillStyle = "#f4e8dd";
     ctx.font = "700 29px Georgia, serif";
-    ctx.fillText("Kỳ Lân U Minh", 166, 1011);
+    ctx.fillText("Kỳ Lân U Minh", 330, 1011);
     ctx.fillStyle = "#bdaeba";
     ctx.font = "17px system-ui, sans-serif";
-    ctx.fillText("Còn 01:24  ·  Top sát thương: Thanh Vân", 166, 1050);
+    ctx.fillText("Còn 01:24  ·  Top sát thương: Thanh Vân", 330, 1050);
+    if (bossArt.complete && bossArt.naturalWidth > 0) ctx.drawImage(bossArt, 135, 878, 166, 166);
     roundRect(585, 990, 320, 26, 13, "rgba(8,7,12,.72)");
     roundRect(585, 990, 237, 26, 13, "#b65657");
     ctx.textAlign = "right";

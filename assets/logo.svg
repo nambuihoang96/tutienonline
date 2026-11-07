@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 220" role="img" aria-labelledby="title">
+  <title id="title">Phàm Tu — Vạn Đạo Tranh Phong</title>
+  <defs><linearGradient id="gold" x2="0" y2="1"><stop stop-color="#fff0bd"/><stop offset=".48" stop-color="#d8b66b"/><stop offset="1" stop-color="#8c6430"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <path d="M70 164Q500 12 930 164M130 180Q500 55 870 180" fill="none" stroke="#a98045" stroke-opacity=".65" stroke-width="2"/>
+  <circle cx="500" cy="35" r="9" fill="#f3d88f" filter="url(#glow)"/>
+  <text x="500" y="126" text-anchor="middle" fill="url(#gold)" stroke="#38261a" stroke-width="2" paint-order="stroke" font-family="Georgia,serif" font-size="82" font-weight="700" letter-spacing="10">PHÀM TU</text>
+  <text x="500" y="174" text-anchor="middle" fill="#d6c7a1" font-family="serif" font-size="24" letter-spacing="8">VẠN ĐẠO TRANH PHONG</text>
+</svg>

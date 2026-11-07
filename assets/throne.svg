@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <defs><linearGradient id="wood" x2="1"><stop stop-color="#38243c"/><stop offset=".5" stop-color="#76503e"/><stop offset="1" stop-color="#35213a"/></linearGradient><linearGradient id="gold" x2="0" y2="1"><stop stop-color="#f1d895"/><stop offset="1" stop-color="#9c7136"/></linearGradient></defs>
+  <path d="M95 310V170q0-36 30-48l24-10q-7-40 24-58l40-28 37 31 36-31 41 29q29 23 20 57l27 10q31 12 31 48v140h-54V175l-42-16-39 67-20 70-20-70-40-67-42 16v135z" fill="url(#wood)" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M150 335h201l30 34H120zM174 256h152M181 285h138M205 106l45-34 44 34-44 38z" fill="none" stroke="url(#gold)" stroke-width="9" stroke-linejoin="round"/>
+  <circle cx="250" cy="111" r="15" fill="#8bd0bd" stroke="#f3d895" stroke-width="6"/>
+  <path d="M102 385h296" stroke="#d2b56e" stroke-width="10" stroke-linecap="round"/>
+</svg>
