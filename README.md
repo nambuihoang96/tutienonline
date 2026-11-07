@@ -19,12 +19,12 @@ npm install
 npm run dev
 ```
 
-The database is created at `data/pham-tu.sqlite` by default. Set `GAME_DB_PATH` to use another local path.
+Vite serves the renderer at `http://localhost:5173`; the game server listens on `ws://127.0.0.1:3001`. The database is created at `data/pham-tu.sqlite` by default. Set `GAME_DB_PATH` to use another local path. Set `ENABLE_SIMULATOR=1` only when you want the local WebSocket simulator to accept normalized test events.
 
 ## Next implementation milestones
 
 1. Validate live comments, cumulative like deltas, and Gift combo finalization with a real LIVE session.
 2. Complete transactional event commands and the 12-minute scheduler against SQLite.
-3. Add WebSocket state publication and the 9:16 Canvas renderer.
+3. Replace placeholder Canvas art, add the active event/boss overlays, and build the host panel.
 4. Add host controls, simulator, and operating/recovery flows.
 
