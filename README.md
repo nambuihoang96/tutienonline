@@ -27,4 +27,3 @@ Vite serves the renderer at `http://localhost:5173`; the game server listens on 
 2. Complete transactional event commands and the 12-minute scheduler against SQLite.
 3. Replace placeholder Canvas art, add the active event/boss overlays, and build the host panel.
 4. Add host controls, simulator, and operating/recovery flows.
-

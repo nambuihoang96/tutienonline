@@ -58,4 +58,3 @@ export const GIFT_BANDS: readonly GiftBand[] = [
 ];
 
 export const EVENT_CYCLE_MS = 12 * 60_000;
-

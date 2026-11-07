@@ -209,4 +209,3 @@ export class GameEngine {
     return { ok: true, code: "BOSS_ATTACK", message: `${player.displayName} gây ${damage} sát thương.`, player: this.getPlayer(userId)!, data: { damage } };
   }
 }
-

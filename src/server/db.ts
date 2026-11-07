@@ -58,4 +58,3 @@ db.exec(`
     created_at INTEGER NOT NULL
   );
 `);
-

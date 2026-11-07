@@ -35,4 +35,3 @@ export interface TikTokAdapter {
   onEvent(handler: (event: NormalizedLiveEvent) => void): void;
   onConnectionState(handler: (state: "connecting" | "connected" | "disconnected" | "error") => void): void;
 }
-

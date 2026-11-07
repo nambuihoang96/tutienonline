@@ -50,4 +50,3 @@ export function giftReward(coinValue: number, bossAlive: boolean) {
     priorityCoinValue: coinValue,
   };
 }
-

@@ -66,4 +66,3 @@ Quy ước tên: chữ thường không dấu, dùng `_`, ví dụ `background_m
 ## Nền đã khởi tạo
 
 Hiện có cấu hình cảnh giới/cân bằng, các hàm luật cốt lõi, kiểu sự kiện chuẩn hóa cho connector, schema SQLite WAL có receipt Gift/event để chống cộng trùng, và lệnh chạy Node/TypeScript. Việc tiếp theo là nối luật vào transaction và scheduler, phát state qua WebSocket, rồi dựng renderer 9:16 và host panel. Project hiện chưa nối TikTok LIVE và chưa có giao diện cuối.
-

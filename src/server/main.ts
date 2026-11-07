@@ -69,4 +69,3 @@ console.log(`Simulator ${simulatorEnabled ? "enabled" : "disabled"}; no TikTok L
 
 process.on("SIGINT", () => { wss.close(); db.close(); process.exit(0); });
 process.on("SIGTERM", () => { wss.close(); db.close(); process.exit(0); });
-
