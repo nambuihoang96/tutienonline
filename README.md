@@ -5,6 +5,7 @@ TypeScript game foundation based on `GDD_Pham_Tu_v3_2.md`.
 ## Current foundation
 
 - Game progression and balance rules are represented in `src/shared/gameConfig.ts` and `src/server/domain/rules.ts`.
+- `src/shared/realmVisuals.ts` maps all 16 realms to a distinct character file, idle aura profile, and breakthrough success/failure effect. Art briefs and filenames are in GDD §10.1; the renderer falls back to the current portrait placeholders until tier sprites arrive.
 - `GameEngine` implements join, `tu`, `!do kiep`, Gift rewards with idempotent receipts, passive cultivation, and the first mining / boss attack actions.
 - Normalized TikTok event and adapter interfaces are in `src/server/domain/types.ts`.
 - SQLite WAL schema and idempotency keys for Gift receipts / event rewards are in `src/server/db.ts`.
@@ -27,5 +28,5 @@ Vite serves the renderer at `http://localhost:5173`; the game server listens on 
 
 1. Validate live comments, cumulative like deltas, and Gift combo finalization with a real LIVE session.
 2. Complete transactional event commands and the 12-minute scheduler against SQLite.
-3. Replace placeholder Canvas art, add the active event/boss overlays, and build the host panel.
+3. Deliver the 16 realm character sprites, connect the active event/boss overlays, and build the host panel.
 4. Add host controls, simulator, and operating/recovery flows.
